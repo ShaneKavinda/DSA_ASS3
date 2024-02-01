@@ -191,19 +191,31 @@ def rearrange_for_balanced_BST(sorted_sequence):
 
 
 def main():
+    
     # Original data sequence
     original_sequence = [9, -1, 45, 6, 8, 21, 34, 5, 55, 65, 543, 18, 90, 122, 132, 0, 66, 100, -12, 17]
-
     # Task 1
     rearranged_sequence = rearrange_for_balanced_BST(sorted(original_sequence))
-
     # Build a BST using the rearranged sequence
     balanced_BST = BinaryTree()
     for item in rearranged_sequence:
         balanced_BST.insert(item)
-
     # Print the tree shape of the BST
     printTree(balanced_BST.getRoot())
+
+    testarrays = [[73, 22, 65, 52, 97, 50, 90, 37],
+    [96, 89, 82, 51, 12, 55, 27, 91, 40, 79, 83, 4, 10, 3],
+    [60, 95, 98],
+    [73],
+    []]
+
+    for i in testarrays:
+      i = sorted(i)
+      rearranged_sequence = rearrange_for_balanced_BST(i)
+      balanced_BST = BinaryTree()
+      for item in rearranged_sequence:
+          balanced_BST.insert(item)
+      printTree(balanced_BST.root)
 
 
       

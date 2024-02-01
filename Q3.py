@@ -485,4 +485,16 @@ if __name__ == "__main__":
     # print("leaves: ", leaves)
     # print("nodes: ", nodes)
 
+    # testarrays = [[73, 22, 65, 52, 97, 50, 90, 37],
+    # [96, 89, 82, 51, 12, 55, 27, 91, 40, 79, 83, 4, 10, 3],
+    # [60, 95, 98],
+    # [73],
+    # []]
+
+    # for i in testarrays:
+    #   avl = AVLTree()
+    #   for item in i:
+    #       avl.insert(item)
+    #   avl.printTreeNoHB()
+
     main_menu()
