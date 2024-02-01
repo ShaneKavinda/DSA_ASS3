@@ -196,8 +196,6 @@ def main():
 
     # Task 1
     rearranged_sequence = rearrange_for_balanced_BST(sorted(original_sequence))
-    print("Original Data Sequence:", original_sequence)
-    print("Rearranged Data Sequence:", rearranged_sequence)
 
     # Build a BST using the rearranged sequence
     balanced_BST = BinaryTree()

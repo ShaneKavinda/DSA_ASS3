@@ -193,14 +193,11 @@ def buildcompleteTree(sorted_sequence):
   def buildTree(sorted_sequence, result, initial_mid=None):
     if not sorted_sequence:
         return []
-    # print("sequence: ", sorted_sequence, " length : ", len(sorted_sequence)) added for debugging code
     if initial_mid is None:
       initial_mid = len(sorted_sequence) // 2 
-      #  print("initial mid: ", initial_mid) print statement for debugging code
       if initial_mid % 2 == 0 and initial_mid > 0 and len(sorted_sequence) > 4:
         initial_mid += 1
     mid_index = initial_mid
-    # print("mid value:", sorted_sequence[mid_index], " mid index: ", mid_index) print statement for debugging code 
     result.append(sorted_sequence[mid_index])
     buildTree(sorted_sequence[:mid_index], result)
     buildTree(sorted_sequence[mid_index+1:], result)
@@ -219,7 +216,7 @@ def main():
     original_sequence_task1 = [9, -1, 45, 6, 8, 21, 34, 5, 55, 65, 543, 18, 90, 122, 132, 0, 66, 100, -12, 17]
     sorted_sequence = sorted(original_sequence_task1)
     rearranged_sequence_task1 = buildcompleteTree(sorted_sequence)
-    print(rearranged_sequence_task1)
+    #print(rearranged_sequence_task1)
     bst = BinaryTree()
     
     for i in rearranged_sequence_task1:
@@ -229,7 +226,7 @@ def main():
     task2_sequence = [45, -8, 21, 34, 55, 65, 9, 14, 0, 18, 90, 46, 49, 82, 84, 99, 80, 132, 57, 66]
     sorted_sequence = sorted(task2_sequence)
     rearranged_task2_sequence = buildcompleteTree(sorted_sequence)
-    print(rearranged_task2_sequence)
+    #print(rearranged_task2_sequence)
     bst = BinaryTree()
     for i in rearranged_task2_sequence:
        bst.insert(i)
