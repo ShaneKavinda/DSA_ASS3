@@ -464,14 +464,22 @@ def main_menu():
                                 nodes = []
                             case 4:
                                 num = int(input("Enter a number to insert into the AVL tree: "))
-                                avl.insert(num)
-                                print("=== Updated Tree ===")
-                                avl.printTreeNoHB()
+                                found = avl.search(num)
+                                if found:
+                                    print ("Node already present in the tree")
+                                else:
+                                    avl.insert(num)
+                                    print("=== Updated Tree ===")
+                                    avl.printTreeNoHB()
                             case 5:
                                 num = int(input("Enter a number to delete from the Integer tree: "))
-                                avl.delete(num)
-                                print("== Updated tree after deleting ", num, " ==")
-                                avl.printTreeNoHB()
+                                found = avl.search(num)
+                                if found:
+                                    avl.delete(num)
+                                    print("== Updated tree after deleting ", num, " ==")
+                                    avl.printTreeNoHB()
+                                else:
+                                    print("Node not present in the Tree")
                             case 6:
                                 break
                 case 3:
