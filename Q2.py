@@ -12,18 +12,18 @@ class BinaryTree:
                 current = current.left
             elif e > current.element:
                 current = current.right
-            elif e == current.element: # element matches current.element
+            else: 
                 return True # Element is found
 
         return False
 
     # Calculate the depth of a given node in the BST
     def depth_nodeBST(self, N):
-        depth = self.depth_nodeBSTHelper(N.element)  # Use the search method to find the depth
+        depth = self.depth_nodeBSTHelper(N.element)  
         return depth
 
 
-     # Return True if the element is in the tree
+     # Return depth of the element in the tree
     def depth_nodeBSTHelper(self, e):
         current = self.root # Start from the root
         depth = 0
@@ -69,10 +69,6 @@ class BinaryTree:
     # Create a new TreeNode for element e
     def createNewNode(self, e):
       return TreeNode(e)
-    """
-    # Return the size of the tree
-    def getSize(self):
-      return self.size"""
 
     # Inorder traversal from the root
     def inorder(self):
@@ -84,6 +80,9 @@ class BinaryTree:
         self.inorderHelper(root.left)
         print(root.element, end = " ")
         self.inorderHelper(root.right)
+
+
+    
 
      # Inverse inorder traversal from the root
     def inverse_inorder(self):
@@ -131,8 +130,24 @@ class BinaryTree:
         self.postorderHelper(root.left)
         self.postorderHelper(root.right)
         print(root.element, end = " ")
+        
 
-
+    # Calculate the depth of a sub tree in the BST
+    def depth_subtreeBST(self, N):
+        if N is None:
+            return 0
+        else:
+            return self.depth_subtreeBST_helper(N)
+        
+    # Return depth of a sub tree in the tree
+    def depth_subtreeBST_helper(self, root):
+        if root is not None:
+            left_depth = self.depth_subtreeBST_helper(root.left)
+            right_depth = self.depth_subtreeBST_helper(root.right)
+            depth = max(left_depth, right_depth) + 1
+            return depth
+        else:
+            return 0
 
     # Preorder traversal from the root
     def preorder(self):
@@ -144,15 +159,51 @@ class BinaryTree:
         print(root.element, end = " ")
         self.preorderHelper(root.left)
         self.preorderHelper(root.right)
-
+        
+    # Calculate the number of total nodes
     def total_nodesBST(self, N):
         return self.total_nodesBST_helper(N)
-
+    
+    #Return of total nodes
     def total_nodesBST_helper(self, root):
         if root is None:
             return 0
         else:
             return 1 + self.total_nodesBST_helper(root.left) + self.total_nodesBST_helper(root.right)
+
+    #Delete element in the tee
+    def delete(self, key):
+        self.root = self.deleteHelper(self.root, key)
+
+    def deleteHelper(self, root, key):
+        if root == None:
+            return root
+
+        # Search for the node to delete
+        if key < root.element:
+            root.left = self.deleteHelper(root.left, key)
+        elif key > root.element:
+            root.right = self.deleteHelper(root.right, key)
+        else:
+            # Node with only one child or no child
+            if root.left == None:
+                return root.right
+            elif root.right == None:
+                return root.left
+
+            # Node with two children
+            root.element = self.find_min(root.right).element
+            root.right = self.deleteHelper(root.right, root.element)
+
+        return root
+
+    def find_min(self, root):
+        current = root
+        while current.left != None:
+            current = current.left
+        return current
+
+    
 
     
     # Return true if the tree is empty
@@ -167,51 +218,16 @@ class BinaryTree:
     # Return the root of the tree
     def getRoot(self):
       return self.root
-    
 
-    
-# Find the depth of a subtree starting with a user provided node
-
-def find_subtree_depth(root, root_key):
-    subtree_root = find_node(root, root_key)
-    if subtree_root:
-        return max(find_height(subtree_root.left), find_height(subtree_root.right))
-    else:
-        return -1  # Subtree root not found in the tree
-
-def find_height(root):
-    if root is None:
-        return 0
-    left_height = find_height(root.left)
-    right_height = find_height(root.right)
-    return max(left_height, right_height)
-         
+class TreeNode:
+    def __init__(self, e):
+      self.element = e
+      self.left = None # Point to the left node, default None
+      self.right = None # Point to the right node, default None
 
 
-def find_depth(root, key, depth=0):
-    if root is None:
-        return -1  # Node not found
-    if root.element == key:
-        return depth
-    elif root.element < key:
-        return find_depth(root.right, key, depth + 1)
-    else:
-        return find_depth(root.left, key, depth + 1)
+"""code from Pearson Education, Inc p104 """
 
-def find_node(root, key):
-    if root is None:
-        return None
-    if root.element == key:
-        return root
-    elif root.element < key:
-        return find_node(root.right, key)
-    else:
-        return find_node(root.left, key)
-    
-
-
-   
-    
 def printTree(root, element="element", left="left", right="right"):                                 ##  https://stackoverflow.com/questions/34012886/print-binary-tree-level-by-level-in-python
     def display(root, element=element, left=left, right=right):                                     ##  AUTHOR: Original: J.V.     Edit: BcK
         """Returns list of strings, width, height, and horizontal coordinate of the root."""
@@ -269,13 +285,8 @@ def printTree(root, element="element", left="left", right="right"):             
         print("\t", line)
     print()
 
-class TreeNode:
-    def __init__(self, e):
-      self.element = e
-      self.left = None # Point to the left node, default None
-      self.right = None # Point to the right node, default None
 
-    ####################### Main test binary tree
+    # Main test binary tree
 
 def print_menu():
     print("\n\n1. Pre-load a sequence of integers to build BST")
@@ -294,120 +305,198 @@ def menu_two():
     print("8. Exit")
     
 
-   
 
 def main():
 
-   
-    numbers =[58, 84, 68, 23, 38, 82, 26, 17, 24, 106, 95, 48, 88, 54, 50, 51, 53, 49, -6, -46]
-    print ("\n\nInserting the following values into an initially empty BST:\n")
-    # for i in numbers:
-    #     print(i, end=" ")
-    # print()   
-    intTree = BinaryTree()
-    for e in numbers:
-      intTree.insert(e)
-    root_node = intTree.getRoot()
-    printTree(intTree.root)
-    depth = find_depth(intTree.root, 54)
-    print("depth of node 54: ", depth)
-    subtree_node = 38
-    subtree_depth = find_subtree_depth(intTree.root, subtree_node)
-    print("depth of the subtree: ", subtree_depth)
-    
-    
-    
+    choice = 0
+    while True:
+        try:
+            print_menu()
+            choice = int(input("Enter your choice (1-3): "))
+            match choice:
+                case 1:
+                    ### Test Cases ###
+                    # [73, 22, 65, 52, 97, 50, 90, 37],
+                    # [96, 89, 82, 51, 12, 55, 27, 91, 40, 79, 83, 4, 10, 3],
+                    # [60, 95, 98],
+                    # [73],
+                    # []
+                    numbers =[58, 84, 68, 23, 38, 82, 26, 17, 24, 106, 95, 48, 88, 54, 50, 51, 53, 49, -6, -46]
+                    print ("\n\nInserting the following values into an initially empty BST:\n")
+                    for i in numbers:
+                        print(i, end=" ")
+                    print()   
+                    intTree = BinaryTree()
+                    for e in numbers:
+                        intTree.insert(e)
+                    choice = 0
+                    while choice != 8:
+                        menu_two()
+                        try:
+                            choice = int(input("Enter your choice (1-8): "))
+                        except ValueError:
+                            print("Invalid input. Please enter a number.")
+                            continue
+
+                        if choice == 1:
+                        
+                            printTree(intTree.root)
+                            print("\nPreorder traversal:")
+                            intTree.preorder()
+                            print("\n\nInorder traversal:")
+                            intTree.inorder()
+                            print("\n\nInverse Inorder traversal:")
+                            intTree.inverse_inorder()
+                            print("\n\nPostorder traversal:")
+                            intTree.postorder()
+                        elif choice == 2:
+                            print("\n\nLeaf node:")
+                            intTree.leaf_BST()
+                            print("\nNon Leaf node:")
+                            intTree.non_leaf_BST()
+                        elif choice == 3:
+                            printTree(TreeNode(84))
+                        elif choice == 4:
+
+                            search_value = int(input("\n\nEnter search value"))
+                            found = intTree.search(search_value)
+                            if found:
+                                print("\nDepth of the root node:", intTree.depth_nodeBST(TreeNode(search_value)))
+                            else:
+                                print("\nNode not found in the tree")
+
+                        elif choice == 5:
+                            search_value = int(input("\n\nEnter sub tree value"))
+                            found = intTree.search(search_value)
+                            if found:
+                                print("\nDepth of the sub tree:", intTree.depth_subtreeBST_helper(TreeNode(search_value)))
+                            else:
+                                print("\nNode not found in the tree")
+                        elif choice == 6:
+                            ##returns false for everything whats the problem
+                            insert_value = int(input("\n\nEnter value to insert: "))
+                            found = intTree.search(insert_value)
+                            print(found)
+                            if not found:
+                                print("\n\nBefore insertion:")
+                                intTree.inorder()
+                                intTree.insert(insert_value)
+                                print("\n\nAfter insertion:")
+                                intTree.inorder()
+                            else:
+                                print("\nValue already exists in tree")
+                        elif choice == 7:
+                            delete_value = int(input("\n\nEnter delete value: "))
+                            found = intTree.search(delete_value)          
+                            if found:
+                                print("\n\nBefore deletion:")
+                                intTree.inorder()
+                                intTree.delete(delete_value)
+                                print("\n\nAfter deletion:")
+                                intTree.inorder()
+                            else:
+                                print("\nNode not found in the tree")
+                        elif choice == 8:
+                            print("Return to Main Menu")
+                            break
+                        else:
+                            print("Invalid choice. Please enter a number between 1 and 8.")
+
+                                
+
+                #print("\n\nTotal Nodes: ",intTree.total_nodesBST(root_node))
+                case 2:
+                    numbers_input = input("Enter a list of numbers separated by space: ")
+                    numbers_list = [int(num) for num in numbers_input.split()]
+                    print ("\n\nInserting the following values into an initially empty BST:\n")
+                    for i in numbers_list:
+                        print(i, end=" ")
+                    print()   
+                    intTree = BinaryTree()
+                    for e in numbers_list:
+                        intTree.insert(e)
+                    choice = 0
+                    while choice != 8:
+                        menu_two()
+                        try:
+                            choice = int(input("Enter your choice (1-8): "))
+                        except ValueError:
+                            print("Invalid input. Please enter a number.")
+                            continue
+
+                        if choice == 1:
+                        
+                            printTree(intTree.root)
+                            print("\nPreorder traversal:")
+                            intTree.preorder()
+                            print("\n\nInorder traversal:")
+                            intTree.inorder()
+                            print("\n\nInverse Inorder traversal:")
+                            intTree.inverse_inorder()
+                            print("\n\nPostorder traversal:")
+                            intTree.postorder()
+                        elif choice == 2:
+                            print("\n\nLeaf node:")
+                            intTree.leaf_BST()
+                            print("\nNon Leaf node:")
+                            intTree.non_leaf_BST()
+                        elif choice == 3:
+                            printTree(TreeNode(84))
+                        elif choice == 4:
+
+                            search_value = int(input("\n\nEnter search value"))
+                            found = intTree.search(search_value)
+                            if found:
+                                print("\nDepth of the root node:", intTree.depth_nodeBST(TreeNode(search_value)))
+                            else:
+                                print("\nNode not found in the tree")
+
+                        elif choice == 5:
+                            search_value = int(input("\n\nEnter sub tree value"))
+                            found = intTree.search(search_value)
+                            if found:
+                                print("\nDepth of the sub tree:", intTree.depth_subtreeBST_helper(TreeNode(search_value)))
+                            else:
+                                print("\nNode not found in the tree")
+                        elif choice == 6:
+                            ##returns false for everything whats the problem
+                            insert_value = int(input("\n\nEnter value to insert: "))
+                            found = intTree.search(insert_value)
+                            print(found)
+                            if not found:
+                                print("\n\nBefore insertion:")
+                                intTree.inorder()
+                                intTree.insert(insert_value)
+                                print("\n\nAfter insertion:")
+                                intTree.inorder()
+                            else:
+                                print("\nValue already exists in tree")
+                        elif choice == 7:
+                            delete_value = int(input("\n\nEnter delete value: "))
+                            found = intTree.search(delete_value)          
+                            if found:
+                                print("\n\nBefore deletion:")
+                                intTree.inorder()
+                                intTree.delete(delete_value)
+                                print("\n\nAfter deletion:")
+                                intTree.inorder()
+                            else:
+                                print("\nNode not found in the tree")
+                        elif choice == 8:
+                            print("Exiting the program.")
+                        else:
+                            print("Invalid choice. Please enter a number between 1 and 8.")
 
 
+                case 3:
+                    print("Exiting the program.")
+                    break
+                case _:
+                    print("Invalid choice. Please enter a number between 1 and 3.")
 
-    # print("\nInorder traversal:")
-    # intTree.inorder()
-    # print("\npostorder traversal: ")
-    # intTree.postorder()
-    # print("\n preorder traversal: ")
-    # intTree.preorder()    All 3 works
-
-
-       
-    # choice = 0
-    # while choice != 3:
-    #     print_menu()
-    #     try:
-    #         choice = int(input("Enter your choice (1-3): "))
-    #     except ValueError:
-    #         print("Invalid input. Please enter a number.")
-    #         continue
-
-    #     if choice == 1:
-    #         print("1")
-    #     elif choice == 2:
-    #         print("2")
-
-    #     elif choice == 3:
-    #         print("Exiting the program.")
-    #     else:
-    #         print("Invalid choice. Please enter a number between 1 and 3.")
-
-
-    # choice = 0
-    # while choice != 8:
-    #     menu_two()
-    #     try:
-    #         choice = int(input("Enter your choice (1-8): "))
-    #     except ValueError:
-    #         print("Invalid input. Please enter a number.")
-    #         continue
-
-    #     if choice == 1:
-    #         print("\nPreorder traversal:")
-    #         intTree.preorder()
-    #         print("\n\nInorder traversal:")
-    #         intTree.inorder()
-    #         print("\n\nInverse Inorder traversal:")
-    #         intTree.inverse_inorder()
-    #         print("\n\nPostorder traversal:")
-    #         intTree.postorder()
-    #     elif choice == 2:
-    #         print("\n\nLeaf node:")
-    #         intTree.leaf_BST()
-    #         print("\nNon Leaf node:")
-    #         intTree.non_leaf_BST()
-    #     elif choice == 3:
-    #         print("3")
-    #     elif choice == 4:
-            
-    #         search_value = int(input("\n\nEnter search value"))
-    #         search_value = TreeNode(search_value)
-    #         found = intTree.search(search_value)
-            
-          
-    #         if found:
-    #             print("\nDepth of the root node:", intTree.depth_nodeBST(search_value))
-    #         else:
-    #             print("\nNode not found in the tree")
-    #     elif choice == 5:
-    #         print("5")
-    #     elif choice == 6:
-    #         print("6")
-    #     elif choice == 7:
-    #         print("7")
-    #     elif choice == 8:
-    #         print("Exiting the program.")
-    #     else:
-    #         print("Invalid choice. Please enter a number between 1 and 8.")
-
-
-
-
-
-
-
-
-
-
-
-    
-
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+        
       
 if __name__ == "__main__":
     main() 

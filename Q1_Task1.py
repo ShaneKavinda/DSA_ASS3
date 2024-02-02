@@ -203,6 +203,8 @@ def main():
     # Print the tree shape of the BST
     printTree(balanced_BST.getRoot())
 
+
+    ### Test Cases ###
     testarrays = [[73, 22, 65, 52, 97, 50, 90, 37],
     [96, 89, 82, 51, 12, 55, 27, 91, 40, 79, 83, 4, 10, 3],
     [60, 95, 98],
