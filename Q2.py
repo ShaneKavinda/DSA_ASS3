@@ -378,7 +378,7 @@ def main():
                                 print("Root of the sub tree is not in the tree")
                         elif choice == 4:
 
-                            search_value = int(input("\n\nEnter search value"))
+                            search_value = int(input("\n\nEnter search value: "))
                             found = intTree.search(search_value)
                             if found:
                                 print("\nDepth of the root node:", intTree.depth_nodeBST(TreeNode(search_value)))
@@ -389,7 +389,7 @@ def main():
                             search_value = int(input("\n\nEnter sub tree value"))
                             found = intTree.search(search_value)
                             if found:
-                                print("\nDepth of the sub tree:", intTree.depth_subtreeBST_helper(TreeNode(search_value)))
+                                print("\nDepth of the sub tree:", intTree.depth_nodeBST(TreeNode(search_value)))
                             else:
                                 print("\nNode not found in the tree")
                         elif choice == 6:
@@ -403,6 +403,7 @@ def main():
                                 intTree.insert(insert_value)
                                 print("\n\nAfter insertion:")
                                 intTree.inorder()
+                                printTree(intTree.root)
                             else:
                                 print("\nValue already exists in tree")
                         elif choice == 7:
@@ -414,6 +415,7 @@ def main():
                                 intTree.delete(delete_value)
                                 print("\n\nAfter deletion:")
                                 intTree.inorder()
+                                printTree(intTree.root)
                             else:
                                 print("\nNode not found in the tree")
                         elif choice == 8:
@@ -427,7 +429,7 @@ def main():
                 #print("\n\nTotal Nodes: ",intTree.total_nodesBST(root_node))
                 case 2:
                     numbers_input = input("Enter a list of numbers separated by space: ")
-                    numbers_list = [int(num) for num in numbers_input.split()]
+                    numbers_list = [int(num) for num in numbers_input.strip().split()]
                     print ("\n\nInserting the following values into an initially empty BST:\n")
                     for i in numbers_list:
                         print(i, end=" ")
@@ -488,7 +490,7 @@ def main():
 
                         elif choice == 4:
 
-                            search_value = int(input("\n\nEnter search value"))
+                            search_value = int(input("\n\nEnter search value: "))
                             found = intTree.search(search_value)
                             if found:
                                 print("\nDepth of the root node:", intTree.depth_nodeBST(TreeNode(search_value)))
@@ -499,20 +501,21 @@ def main():
                             search_value = int(input("\n\nEnter sub tree value"))
                             found = intTree.search(search_value)
                             if found:
-                                print("\nDepth of the sub tree:", intTree.depth_subtreeBST_helper(TreeNode(search_value)))
+                                print("\nDepth of the sub tree:", intTree.depth_nodeBST(TreeNode(search_value)))
                             else:
                                 print("\nNode not found in the tree")
                         elif choice == 6:
                             ##returns false for everything whats the problem
                             insert_value = int(input("\n\nEnter value to insert: "))
                             found = intTree.search(insert_value)
-                            print(found)
+                            #print(found)
                             if not found:
                                 print("\n\nBefore insertion:")
                                 intTree.inorder()
                                 intTree.insert(insert_value)
                                 print("\n\nAfter insertion:")
                                 intTree.inorder()
+                                printTree(intTree.root)
                             else:
                                 print("\nValue already exists in tree")
                         elif choice == 7:
