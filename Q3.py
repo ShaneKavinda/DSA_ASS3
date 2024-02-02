@@ -62,6 +62,19 @@ class AVLTree():
             debug("Key [" + str(key) + "] already in tree.")
             
         self.rebalance() 
+    # Return True if the element is in the tree
+    def search(self, e):
+        current = self # Start from the root
+
+        while current.node != None:
+            if e < current.node.key:
+                current = current.node.left
+            elif e > current.node.key:
+                current = current.node.right
+            else: 
+                return True # Element is found
+
+        return False
 
     def delete(self, key):
         tree = self.node
@@ -360,103 +373,112 @@ def main_menu():
         print("1. Preload a sequence of integers to build an AVL Tree")
         print("2. Manually enter integer keys one by one to build an AVL Tree")
         print("3. Exit")
+        try:
+            user_input = int(input("Choose one of the above options: "))
 
-        user_input = int(input("Choose one of the above options: "))
-
-        match (user_input):
-            case 1:
-                print("Enter the sequence of keys to enter into the AVL Tree seperated by spaces\ne.g: 3 74 52 6")
-                sequence = list(input("Enter the sequence: ").strip().split(" "))
-                sequence = [int(i) for i in sequence]
-                avl = AVLTree()
-                for i in sequence:
-                    avl.insert(i)
-                while (True):
-                    print("1. Display the AVL Tree, showing the height and balance factor for each node")
-                    print("2. Print pre-order, in-order and post-order traversal sequences of the AVL tree")
-                    print("3. Print all leaf nodes of the AVL Tree, and non leaf nodes")
-                    print("4. Insert a new integer into the AVL Tree")
-                    print("5. Delete an integer key from the AVL Tree")
-                    print("6. Return to main menu")
-                    user_input = int(input("Choose one of the above options: "))
-                    match (user_input):
-                        case 1:
-                            avl.display()
-                            avl.printTreeNoHB()
-                        case 2:
-                            print("in-order traversal: ", avl.inorder_traverse())
-                            print("pre-order traversal: ", avl.preorder_traverse())
-                            print("post-order traversal: ", avl.postorder_traverse())
-                        case 3:
-                            (leaves, nodes) = avl.getLeavesAndNodes()
-                            print("leaves: ", leaves)
-                            print("nodes: ", nodes)
-                            leaves = []
-                            nodes = []
-                        case 4:
-                            num = int(input("Enter a number to insert into the AVL tree: "))
+            match (user_input):
+                case 1:
+                    print("Entering the sequence [60, 80, -30, 19, 41, 76, 30, 6, 0, -1, 98, 94, 44, 85, 54, 47, 48, 49, 45, 75, 91]")
+                    sequence = [60, 80, -30, 19, 41, 76, 30, 6, 0, -1, 98, 94, 44, 85, 54, 47, 48, 49, 45, 75, 91]
+                    avl = AVLTree()
+                    for i in sequence:
+                        avl.insert(i)
+                    while (True):
+                        print("1. Display the AVL Tree, showing the height and balance factor for each node")
+                        print("2. Print pre-order, in-order and post-order traversal sequences of the AVL tree")
+                        print("3. Print all leaf nodes of the AVL Tree, and non leaf nodes")
+                        print("4. Insert a new integer into the AVL Tree")
+                        print("5. Delete an integer key from the AVL Tree")
+                        print("6. Return to main menu")
+                        user_input = int(input("Choose one of the above options: "))
+                        match (user_input):
+                            case 1:
+                                avl.display()
+                                avl.printTreeNoHB()
+                            case 2:
+                                print("in-order traversal: ", avl.inorder_traverse())
+                                print("pre-order traversal: ", avl.preorder_traverse())
+                                print("post-order traversal: ", avl.postorder_traverse())
+                            case 3:
+                                (leaves, nodes) = avl.getLeavesAndNodes()
+                                print("leaves: ", leaves)
+                                print("nodes: ", nodes)
+                                leaves = []
+                                nodes = []
+                            case 4:
+                                num = int(input("Enter a number to insert into the AVL tree: "))
+                                found = avl.search(num)
+                                if found:
+                                    print ("Node already present in the tree")
+                                else:
+                                    avl.insert(num)
+                                    print("=== Updated Tree ===")
+                                    avl.printTreeNoHB()
+                            case 5:
+                                num = int(input("Enter a number to delete from the Integer tree: "))
+                                found = avl.search(num)
+                                if found:
+                                    avl.delete(num)
+                                    print("== Updated tree after deleting ", num, " ==")
+                                    avl.printTreeNoHB()
+                                else:
+                                    print("Node not present in the Tree")
+                            case 6:
+                                break
+                                
+                case 2:
+                    print("Enter the numbers you want to insert one by one:")
+                    avl = AVLTree()
+                    #finish_entering_nums = False
+                    while(True):
+                        user_input = input("Enter the number to insert into the AVL tree(press e to finish): ")
+                        if user_input == "e" or user_input == "E":
+                            break
+                        else:
+                            num = int(user_input.strip())
                             avl.insert(num)
                             print("=== Updated Tree ===")
                             avl.printTreeNoHB()
-                        case 5:
-                            num = int(input("Enter a number to delete from the Integer tree: "))
-                            avl.delete(num)
-                            print("== Updated tree after deleting ", num, " ==")
-                            avl.printTreeNoHB()
-                        case 6:
-                            break
-                            
-            case 2:
-                print("Enter the numbers you want to insert one by one:")
-                avl = AVLTree()
-                #finish_entering_nums = False
-                while(True):
-                    user_input = input("Enter the number to insert into the AVL tree(press e to finish): ")
-                    if user_input == "e" or user_input == "E":
-                        break
-                    else:
-                        num = int(user_input.strip())
-                        avl.insert(num)
-                        print("=== Updated Tree ===")
-                        avl.printTreeNoHB()
-                # Prompt menu after finish inserting values
-                while (True):
-                    print("1. Display the AVL Tree, showing the height and balance factor for each node")
-                    print("2. Print pre-order, in-order and post-order traversal sequences of the AVL tree")
-                    print("3. Print all leaf nodes of the AVL Tree, and non leaf nodes")
-                    print("4. Insert a new integer into the AVL Tree")
-                    print("5. Delete an integer key from the AVL Tree")
-                    print("6. Return to main menu")
-                    user_input = int(input("Choose one of the above options: "))
-                    match (user_input):
-                        case 1:
-                            avl.display()
-                            avl.printTreeNoHB()
-                        case 2:
-                            print("in-order traversal: ", avl.inorder_traverse())
-                            print("pre-order traversal: ", avl.preorder_traverse())
-                            print("post-order traversal: ", avl.postorder_traverse())
-                        case 3:
-                            (leaves, nodes) = avl.getLeavesAndNodes()
-                            print("leaves: ", leaves)
-                            print("nodes: ", nodes)
-                            leaves = []
-                            nodes = []
-                        case 4:
-                            num = int(input("Enter a number to insert into the AVL tree: "))
-                            avl.insert(num)
-                            print("=== Updated Tree ===")
-                            avl.printTreeNoHB()
-                        case 5:
-                            num = int(input("Enter a number to delete from the Integer tree: "))
-                            avl.delete(num)
-                            print("== Updated tree after deleting ", num, " ==")
-                            avl.printTreeNoHB()
-                        case 6:
-                            break
-            case 3:
-                exit_condition
-                break
+                    # Prompt menu after finish inserting values
+                    while (True):
+                        print("1. Display the AVL Tree, showing the height and balance factor for each node")
+                        print("2. Print pre-order, in-order and post-order traversal sequences of the AVL tree")
+                        print("3. Print all leaf nodes of the AVL Tree, and non leaf nodes")
+                        print("4. Insert a new integer into the AVL Tree")
+                        print("5. Delete an integer key from the AVL Tree")
+                        print("6. Return to main menu")
+                        user_input = int(input("Choose one of the above options: "))
+                        match (user_input):
+                            case 1:
+                                avl.display()
+                                avl.printTreeNoHB()
+                            case 2:
+                                print("in-order traversal: ", avl.inorder_traverse())
+                                print("pre-order traversal: ", avl.preorder_traverse())
+                                print("post-order traversal: ", avl.postorder_traverse())
+                            case 3:
+                                (leaves, nodes) = avl.getLeavesAndNodes()
+                                print("leaves: ", leaves)
+                                print("nodes: ", nodes)
+                                leaves = []
+                                nodes = []
+                            case 4:
+                                num = int(input("Enter a number to insert into the AVL tree: "))
+                                avl.insert(num)
+                                print("=== Updated Tree ===")
+                                avl.printTreeNoHB()
+                            case 5:
+                                num = int(input("Enter a number to delete from the Integer tree: "))
+                                avl.delete(num)
+                                print("== Updated tree after deleting ", num, " ==")
+                                avl.printTreeNoHB()
+                            case 6:
+                                break
+                case 3:
+                    exit_condition
+                    break
+        except ValueError:
+            print("Please enter a valid option: ")
 
 
 # Usage example
