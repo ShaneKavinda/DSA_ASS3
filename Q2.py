@@ -355,7 +355,27 @@ def main():
                             print("\nNon Leaf node:")
                             intTree.non_leaf_BST()
                         elif choice == 3:
-                            printTree(TreeNode(84))
+                            subtree_root = int(input("Enter the root of the sub tree: "))
+                            found = intTree.search(subtree_root)
+                            if found:
+                                print("=== Sub Tree === ")
+                                current = intTree.root
+                                while current != None:
+                                    if subtree_root < current.element:
+                                        current = current.left
+                                    elif subtree_root > current.element:
+                                        current = current.right
+                                    elif subtree_root == current.element:
+                                        subtree_root = current
+                                        break
+                                printTree(subtree_root)
+                                subtree = BinaryTree()
+                                subtree.root = subtree_root
+                                total_nodes = subtree.total_nodesBST(subtree_root)
+                                print("total number of nodes: ", total_nodes)
+                                subtree = None # Free the memory
+                            else:
+                                print("Root of the sub tree is not in the tree")
                         elif choice == 4:
 
                             search_value = int(input("\n\nEnter search value"))
@@ -435,13 +455,37 @@ def main():
                             intTree.inverse_inorder()
                             print("\n\nPostorder traversal:")
                             intTree.postorder()
+
                         elif choice == 2:
                             print("\n\nLeaf node:")
                             intTree.leaf_BST()
                             print("\nNon Leaf node:")
                             intTree.non_leaf_BST()
+
                         elif choice == 3:
-                            printTree(TreeNode(84))
+                            subtree_root = int(input("Enter the root of the sub tree: "))
+                            found = intTree.search(subtree_root)
+                            if found:
+                                print("=== Sub Tree === ")
+                                current = intTree.root
+                                while current != None:
+                                    if subtree_root < current.element:
+                                        current = current.left
+                                    elif subtree_root > current.element:
+                                        current = current.right
+                                    elif subtree_root == current.element:
+                                        subtree_root = current
+                                        break
+                                printTree(subtree_root)
+                                subtree = BinaryTree()
+                                subtree.root = subtree_root
+                                total_nodes = subtree.total_nodesBST(subtree_root)
+                                print("total number of nodes: ", total_nodes)
+                                subtree = None # Free the memory
+                                
+                            else:
+                                print("Root of the sub tree is not in the tree")
+
                         elif choice == 4:
 
                             search_value = int(input("\n\nEnter search value"))

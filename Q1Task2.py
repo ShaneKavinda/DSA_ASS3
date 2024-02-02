@@ -223,6 +223,13 @@ def main():
        bst.insert(i)
     printTree(bst.root)
 
+
+    ### Test Cases ###
+    # [73, 22, 65, 52, 97, 50, 90, 37],
+    # [96, 89, 82, 51, 12, 55, 27, 91, 40, 79, 83, 4, 10, 3],
+    # [60, 95, 98],
+    # [73],
+    # []
     task2_sequence = [45, -8, 21, 34, 55, 65, 9, 14, 0, 18, 90, 46, 49, 82, 84, 99, 80, 132, 57, 66]
     sorted_sequence = sorted(task2_sequence)
     rearranged_task2_sequence = buildcompleteTree(sorted_sequence)
